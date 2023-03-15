@@ -65,6 +65,60 @@ void to_hexa(int n, Stack *s) {
     }
 }
 
+int get_priority(char op)
+{
+    if (op == '*' || op == '/')
+        return 2;
+    if (op == '+' || op == '-')
+        return 1;
+    return 0;
+}
+
+void to_posfix(char st[], char st_out[]) {
+    int i=0;
+    int j=0;
+    Stack s;
+    makenull(&s);
+    while (st[i] != '\0' && st[i] != '\n') {
+        char t = st[i];
+        if (t >= 'A' && t <= 'Z') {
+            st_out[j] = t;
+            j++;
+        }else if (t >= 'a' && t <= 'z') {
+            st_out[j] = t;
+            j++;
+        }else if (t == '(') {
+            push(t, &s);
+        }else if (t == ')') {
+            char x;
+            while (s.elements[s.top] != '(') {
+            x = pop(&s);
+            st_out[j] = x;
+            j++;
+        }
+        if (s.elements[s.top] == '(') {
+            pop(&s);
+        }
+        }else if (t == '+' || t=='-' || t=='*' || t=='/') {
+        if (s.elements[s.top] == '+' || s.elements[s.top] =='-' || s.elements[s.top] =='*' || s.elements[s.top] =='/') {
+            if (get_priority(s.elements[s.top]) >= get_priority(t)) {
+                char x = pop(&s);
+                st_out[j] = x;
+                j++;
+            }
+        }
+            push(t, &s);
+        }
+        i++;
+    }
+    while (!is_empty(s)){
+        char x = pop(&s);
+        st_out[j] = x;
+        j++;
+    }
+    st_out[j] = '\0';
+}
+
 int main() {
     int n;
     Stack S;
