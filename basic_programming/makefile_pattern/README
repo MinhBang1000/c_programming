@@ -1,0 +1,5 @@
+Ghi là 
+gcc a.c b.c main.c -o -I include (nếu cần) final
+./final
+--> Là chạy được nó tự động Link thư viện các kiểu
+
