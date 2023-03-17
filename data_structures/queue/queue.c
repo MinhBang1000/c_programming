@@ -37,6 +37,9 @@ ElementType de_queue(Queue *q) {
         struct Node* t = q->front->next;
         q->front->next = t->next;
         q->size -= 1;
+        if (q->size == 0) {
+            makenull(q);
+        }
         ElementType x = t->data;
         free(t);
         return x;
