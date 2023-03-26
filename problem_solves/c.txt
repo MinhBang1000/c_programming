@@ -1,0 +1,60 @@
+SD_CARD
+- File system
+    + Cách chia ổ đĩa: Khởi nguồn là một ổ đĩa cứng bình thường (Không phân chia)
+    Sau đó, ta dùng phương thức chia tách ẢO --> PARTITION(s) (Chưa dùng được) 
+    --> Format rồi mới hình thành các VOLUME(s)
+    + Điểm khác biệt giữa PARTITION và VOLUME là: Chưa Format và đã Format
+    + Định nghĩa: Filesystem là các phương pháp và các cấu trúc dữ liệu mà một 
+    hệ điều hành sử dụng để theo dõi các tập tin trên ổ đĩa hoặc phân vùng. 
+    Có thể tạm dịch filesystem là một hệ thống tập tin.
+    + Chỉ một PHÂN VÙNG hoặc MỘT Ổ ĐĨA
+    --> Khi sử dụng sector thô của ổ đĩa / phân vùng --> HỎNG HÓC
+    --> Người ta chạy quá trình khởi tạo hệ thống tập tin trên ổ đĩa / phân vùng
+    + Tìm hiểu về CÁCH MOUNT/UNMOUNT Ổ cứng trên LINUX 
+        + Khi gắn ổ cứng bất kỳ vào trong máy tính 
+        --> Linux sẽ nhận ổ cứng đó và hiển thị trong /dev
+        Syntax:
+        mount -t <type> -o <option> <device file> <mount point>
+        Ex: 
+        mount -t ext4 -o defaults /dev/sdb1 /home/tmp/
+        ** Cố gắng kết nối một ổ cứng thật vào thư mục ảo đại diện trên OS
+        ** Để kiểm tra quá trình mount thành công hay chưa, các bạn thực thi lệnh 
+        df -h. Nếu console log tương tự như bên dưới là thành công.
+** HÀM MOUNT 
+       #include <sys/mount.h>
+
+       int mount(const char *source, const char *target,
+                 const char *filesystemtype, unsigned long mountflags,
+                 const void *data = NULL);
+
+    source: /dev/sdb --> Là cái thiết bị gắn vào trong máy tính 
+    target: /home/tmp --> Là cái thư mục ảo trên máy tính để nhận thiết bị 
+    filesystemtype: Linux(ext/ext2/ext3/...), Windows(NFTS,FAT32,...)
+    mountflags: Là cấu hình cách mount và sử dụng như thế nào
+    --> Ex: MS_SYNCHRONIZED: sẽ đồng bộ hóa không cho truy cập đồng thời giữa các luồng
+
+** HÀM SPRINT
+    int sprintf(char *str, const char *string,...);
+
+    - Đưa chuỗi phía sau vào chuỗi phía trước
+
+** HÀM OPEN 
+    #include <fcntl.h>
+
+    int open(const char *path, int oflag, ... );
+    - Trả về 
+        + Lỗi -1
+        + Thành công: In hết sẽ lớn hơn sizeof(buff)
+    - O_CREAT|O_WRONLY|O_TRUNC
+        + O_CREAT: chưa tạo thì tạo
+        + O_WRONLY: Mở ra để ghi
+        + O_TRUNC: Mở ra xong format cái đã
+    
+** HÀM CLOSE 
+    close(fd); --> Nảy open cái gì close cái đó
+
+** UNMOUNT
+    ret = umount("/mnt/mmc"); --> UNMOUNT ngay cái ảnh ảo 
+
+*** Chú ý các kết quả kiểm tra sau trả về là kiểu int
+
