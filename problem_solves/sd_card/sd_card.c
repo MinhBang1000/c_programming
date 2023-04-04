@@ -19,46 +19,44 @@ int main(void)
 {
 	int	ret, fd;
 	char	filename[128];
+	char path[] = "/home/minhbang/Data/c_workspace/c_programming/problem_solves/sd_card/mounted";
 
 	/*mount SD device*/
-	ret = mount("/dev/mmc", "/mnt/mmc", "vfat", MS_SYNCHRONOUS, NULL);
+	ret = mount("/dev/sda", "/mnt/sda", "ext4", MS_SYNCHRONOUS, NULL);
 	if (ret == -1) {
-		ret = mount("/dev/mmc0", "/mnt/mmc", "vfat", MS_SYNCHRONOUS, NULL);
-		if(ret == -1) {
-			printf("no device found\r\n");
-			return;
-		}
-		printf("found /dev/mmc0\r\n");
+		printf("Not found /dev/sda\r\n");
+		printf("Error code = %d\n", errno);
 	} else {
-		printf("found /dev/mmc\r\n");
+		printf("Found /dev/sda\r\n");
 	}
 
-	sprintf(filename, "/mnt/mmc/tmpfile");	
-	/*create file on SD Card*/
-	fd = open(filename, O_CREAT|O_WRONLY|O_TRUNC);
-	if (fd == -1) {
-		printf("create file failed. errno: %d\r\n", errno);		
-	} else {
-		/*write file to SD Card*/
-		ret = write(fd, buf, sizeof(buf));
-		if (ret == -1) {
-			printf("write file failed. errno: %d\r\n", errno);
-		} else {
-			printf("write tmpfile to SD Card ok\r\n");
-		}
-	}
-	close(fd);
+	// sprintf(filename, "/home/minhbang/Data/c_workspace/c_programming/problem_solves/sd_card/mounted/tmpfile\n");	
+	// printf("%s", filename);
+	// /*create file on SD Card*/
+	// fd = open(filename, O_CREAT|O_WRONLY|O_TRUNC);
+	// if (fd == -1) {
+	// 	printf("create file failed. errno: %d\r\n", errno);		
+	// } else {
+	// 	/*write file to SD Card*/
+	// 	ret = write(fd, buf, sizeof(buf));
+	// 	if (ret == -1) {
+	// 		printf("write file failed. errno: %d\r\n", errno);
+	// 	} else {
+	// 		printf("write tmpfile to SD Card ok\r\n");
+	// 	}
+	// }
+	// close(fd);
 
-	/*umount SD Card*/	
-	while (1) {
-		ret = umount("/mnt/mmc");
-		if (ret != 0) {
-			if (errno == EBUSY) { 
-				sleep(1);
-				continue;
-			}	
-		}
-		printf("umount /mnt/mmc\r\n");
-		break;
-	}
+	// /*umount SD Card*/	
+	// while (1) {
+	// 	ret = umount("/mnt/mmc");
+	// 	if (ret != 0) {
+	// 		if (errno == EBUSY) { 
+	// 			sleep(1);
+	// 			continue;
+	// 		}	
+	// 	}
+	// 	printf("umount /mnt/mmc\r\n");
+	// 	break;
+	// }
 }

@@ -58,3 +58,24 @@ SD_CARD
 
 *** Chú ý các kết quả kiểm tra sau trả về là kiểu int
 
+WATCHDOG
+
+SERIAL PORT
+** Khái niệm:
+	- Có thể gọi là DB9 --> Trong đó có 9 đầu dây
+	- Đây là kiểu truyền nối tiếp --> là truyền một bytes cho hết rồi mới truyền bytes khác
+	- Trong khi truyền bytes tại thời điểm đầu sẽ gửi một bit 0 và cuối bytes gửi một bit khác để xác nhận
+	- Baudrate ký hiệu là bd trong đó bd là b/s nếu mỗi ký hiệu mang trên mình 1 bit
+	- Nếu một ký hiệu ~ baud mang trên mình 4 bit thì ta có 1 bd = 4 bit/s = 4 bps
+	- Chú ý mô hình các đầu nối
+	- Một số DB9 phổ biến --> RS232, RS485
+	
+
+** STRACE in Linux
+	- Sử dụng để hiển thị quá trình thực thi một lệnh terminal nào đó hay một chương trình nào đó.
+	- strace ls -l --> Hiện ra các thủ tục khi làm lệnh ls -l này
+	- strace -o output.txt ls -l --> Hiện ra các kết quả của ls -l
+	--> Còn các thủ tục thì ghi vào trong file output.txt
+	- strace -t ls -l --> Hiện luôn thời gian thực khi ta bắt đầu từng thủ tục
+	- strace -t -e open (-e trace=open) ls -l --> Chỉ lấy lệnh nào trong thủ tục có hàm open
+	- 
