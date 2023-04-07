@@ -1,6 +1,6 @@
-final:
-	gcc -o bst bst.c
+init:
+	gcc -o bst_test bst_test.c
 run: 
-	./bst
+	./bst_test
 clean:
-	rm -r *.0 bst
+	rm -r *.o bst_test
